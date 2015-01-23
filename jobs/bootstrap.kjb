@@ -36,10 +36,10 @@
   </connection>
   <connection>
     <name>H2</name>
-    <server>agitated_darwin.docker</server>
+    <server>h2.docker</server>
     <type>H2</type>
     <access>Native</access>
-    <database>kettle</database>
+    <database>stocks</database>
     <port>1521</port>
     <username>sa</username>
     <password>Encrypted 2be98afc86aa7f2e4bb18bd63c99dbdde</password>
@@ -108,8 +108,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>66</xloc>
-      <yloc>167</yloc>
+      <xloc>128</xloc>
+      <yloc>192</yloc>
       </entry>
     <entry>
       <name>Load NYSE</name>
@@ -147,8 +147,8 @@
             </parameter>      </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>281</xloc>
-      <yloc>168</yloc>
+      <xloc>384</xloc>
+      <yloc>192</yloc>
       </entry>
     <entry>
       <name>Load NASDAQ</name>
@@ -186,8 +186,8 @@
             </parameter>      </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>400</xloc>
-      <yloc>162</yloc>
+      <xloc>512</xloc>
+      <yloc>192</yloc>
       </entry>
     <entry>
       <name>Success</name>
@@ -196,8 +196,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>515</xloc>
-      <yloc>162</yloc>
+      <xloc>768</xloc>
+      <yloc>192</yloc>
       </entry>
     <entry>
       <name>Prepare Table</name>
@@ -212,23 +212,50 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>168</xloc>
-      <yloc>165</yloc>
+      <xloc>256</xloc>
+      <yloc>192</yloc>
+      </entry>
+    <entry>
+      <name>Generate Portfolios</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;trans&#x2f;generate_portfolios.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+            <parameter>            <name>data_folder</name>
+            <stream_name/>
+            <value>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;..&#x2f;</value>
+            </parameter>      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>640</xloc>
+      <yloc>192</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
       <from>Load NYSE</from>
       <to>Load NASDAQ</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Load NASDAQ</from>
-      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -247,6 +274,24 @@
     <hop>
       <from>Prepare Table</from>
       <to>Load NYSE</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Load NASDAQ</from>
+      <to>Generate Portfolios</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Generate Portfolios</from>
+      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
