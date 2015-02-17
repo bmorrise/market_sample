@@ -90,7 +90,7 @@
     <type>MONETDB</type>
     <access>Native</access>
     <database>pentaho-instaview</database>
-    <port>50006</port>
+    <port>50000</port>
     <username>monetdb</username>
     <password>Encrypted 2be98afc86aa7f2e4cb14a17edb86abd8</password>
     <servername/>
@@ -101,7 +101,7 @@
       <attribute><code>EXTRA_OPTION_INFOBRIGHT.characterEncoding</code><attribute>UTF-8</attribute></attribute>
       <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
       <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>50006</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>50000</attribute></attribute>
       <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
       <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
       <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
@@ -232,7 +232,6 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Name Input</from><to>Clone Names</to><enabled>Y</enabled> </hop>
   <hop> <from>Clone Names</from><to>Build Portfolio</to><enabled>Y</enabled> </hop>
   <hop> <from>Add Index</from><to>Stream lookup</to><enabled>Y</enabled> </hop>
   <hop> <from>Build Portfolio</from><to>Stream lookup</to><enabled>Y</enabled> </hop>
@@ -240,6 +239,8 @@
   <hop> <from>Symbol Input</from><to>Add Index</to><enabled>Y</enabled> </hop>
   <hop> <from>Select values 2</from><to>Filter rows</to><enabled>Y</enabled> </hop>
   <hop> <from>Filter rows</from><to>Output Portfolios</to><enabled>Y</enabled> </hop>
+  <hop> <from>Name Input</from><to>Add sequence</to><enabled>Y</enabled> </hop>
+  <hop> <from>Add sequence</from><to>Clone Names</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Add Index</name>
@@ -339,6 +340,35 @@
     </step>
 
   <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Output Portfolios</send_true_to>
+<send_false_to/>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <leftvalue>symbol</leftvalue>
+ <function>IS NOT NULL</function>
+ <rightvalue/>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>768</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Name Input</name>
     <type>CsvInput</type>
     <description/>
@@ -388,7 +418,7 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>128</xloc>
+      <xloc>0</xloc>
       <yloc>288</yloc>
       <draw>Y</draw>
       </GUI>
@@ -565,6 +595,22 @@
          <json_field>N</json_field>
 
       </mongo_field>
+      <mongo_field>
+         <incoming_field_name>portfolio_id</incoming_field_name>
+
+         <mongo_doc_path/>
+
+         <use_incoming_field_name_as_mongo_field_name>Y</use_incoming_field_name_as_mongo_field_name>
+
+         <update_match_field>Y</update_match_field>
+
+         <modifier_update_operation>N&#x2f;A</modifier_update_operation>
+
+         <modifier_policy>Insert&#x26;Update</modifier_policy>
+
+         <json_field>N</json_field>
+
+      </mongo_field>
     </mongo_fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>896</xloc>
@@ -602,6 +648,10 @@
         <precision>-2</precision>
       </field>      <field>        <name>SYMBOL</name>
         <rename>symbol</rename>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>portfolio_id</name>
+        <rename/>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
@@ -676,8 +726,8 @@
     </step>
 
   <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
+    <name>Add sequence</name>
+    <type>Sequence</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -686,19 +736,19 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>Output Portfolios</send_true_to>
-<send_false_to>XML Output</send_false_to>
-    <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>symbol</leftvalue>
- <function>IS NOT NULL</function>
- <rightvalue/>
- </condition>
-    </compare>
+      <valuename>portfolio_id</valuename>
+      <use_database>N</use_database>
+      <connection/>
+      <schema/>
+      <seqname>SEQ_</seqname>
+      <use_counter>Y</use_counter>
+      <counter_name/>
+      <start_at>1</start_at>
+      <increment_by>1</increment_by>
+      <max_value>999999999</max_value>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>768</xloc>
+      <xloc>128</xloc>
       <yloc>288</yloc>
       <draw>Y</draw>
       </GUI>

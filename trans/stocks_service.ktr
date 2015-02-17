@@ -75,7 +75,7 @@
   <created_user>-</created_user>
   <created_date>2012&#x2f;06&#x2f;18 09&#x3a;42&#x3a;29.735</created_date>
   <modified_user>admin</modified_user>
-  <modified_date>2015&#x2f;01&#x2f;26 17&#x3a;10&#x3a;17.899</modified_date>
+  <modified_date>2015&#x2f;02&#x2f;04 09&#x3a;30&#x3a;28.888</modified_date>
   </info>
   <notepads>
   </notepads>
@@ -150,6 +150,33 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>MySQL Connection</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>spoontest</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted </password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <order>
   <hop> <from>Extract Name</from><to>Extract Stocks</to><enabled>Y</enabled> </hop>
   <hop> <from>Extract Stocks</from><to>Select</to><enabled>Y</enabled> </hop>
@@ -216,6 +243,11 @@
     <ignoreMissingPath>N</ignoreMissingPath>
     <rownum_field/>
     <file>
+      <name/>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
     </file>
     <fields>
       <field>
@@ -235,6 +267,19 @@
         <name>last_name</name>
         <path>&#x24;.last_name</path>
         <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>portfolio_id</name>
+        <path>&#x24;.portfolio_id</path>
+        <type>Number</type>
         <format/>
         <currency/>
         <decimal/>
@@ -373,6 +418,9 @@
       <linenr_fieldname/>
       <give_back_row>N</give_back_row>
       <group>
+        <field>
+          <name>PORTFOLIO_ID</name>
+        </field>
         <field>
           <name>FIRST_NAME</name>
         </field>
@@ -520,6 +568,10 @@
         <rename>QUANTITY</rename>
         <length>-2</length>
         <precision>-2</precision>
+      </field>      <field>        <name>portfolio_id</name>
+        <rename>PORTFOLIO_ID</rename>
+        <length>-2</length>
+        <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
@@ -583,7 +635,7 @@
       <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>FIRST_NAME</name>
+        <name>PORTFOLIO_ID</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <presorted>N</presorted>
@@ -631,6 +683,10 @@
         <length>-2</length>
         <precision>-2</precision>
       </field>      <field>        <name>CLOSE</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>PORTFOLIO_ID</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
